@@ -2,6 +2,9 @@
 
 # GET SHIT DONE
 
+> **🍴 Fork Notice:** This is a personal fork with custom extensions. See [FORK-MANAGEMENT.md](FORK-MANAGEMENT.md) for branch strategy.  
+> Original repo: [glittercowboy/get-shit-done](https://github.com/glittercowboy/get-shit-done)
+
 **A light-weight and powerful meta-prompting, context engineering and spec-driven development system for Claude Code and OpenCode.**
 
 **Solves context rot — the quality degradation that happens as Claude fills its context window.**
