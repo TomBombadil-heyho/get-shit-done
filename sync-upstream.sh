@@ -3,7 +3,7 @@
 # This script safely updates your main branch from the upstream repository
 # while keeping your development branch (dev) completely unchanged.
 
-set -e  # Exit on any error
+set -euo pipefail  # Exit on any error, treat unset variables as errors, fail on pipe errors
 
 # Colors for output
 GREEN='\033[0;32m'
@@ -28,9 +28,9 @@ fi
 CURRENT_BRANCH=$(git branch --show-current)
 echo -e "${BLUE}📍 Current branch: ${CURRENT_BRANCH}${NC}"
 
-# Check for uncommitted changes
-if ! git diff-index --quiet HEAD --; then
-    echo -e "${RED}❌ Error: You have uncommitted changes${NC}"
+# Check for uncommitted or staged changes
+if ! git diff-index --quiet HEAD -- || ! git diff-index --quiet --cached HEAD --; then
+    echo -e "${RED}❌ Error: You have uncommitted or staged changes${NC}"
     echo "Please commit or stash your changes before syncing."
     echo ""
     echo "To stash changes temporarily:"
@@ -83,9 +83,9 @@ echo "  • Your ${CURRENT_BRANCH} branch is unchanged"
 echo "  • You can continue working on ${CURRENT_BRANCH}"
 echo ""
 echo -e "${YELLOW}Next steps (optional):${NC}"
-echo "  • To merge upstream changes into ${CURRENT_BRANCH}:"
+echo "  • To merge upstream changes from main into ${CURRENT_BRANCH}:"
 echo "    ${BLUE}git merge main${NC}"
 echo ""
-echo "  • To cherry-pick specific commits:"
+echo "  • To cherry-pick specific commits from main:"
 echo "    ${BLUE}git cherry-pick <commit-hash>${NC}"
 echo ""
