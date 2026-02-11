@@ -1,0 +1,26 @@
+{
+  "_comment": "Copy this hooks configuration into your IME project's .claude/settings.json to enable automated validation after section generation.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "A file was just written. If it is an IME report section draft (in a REPORTS/*/drafts/ directory), check: (1) all required section headers are present per the section template, (2) no placeholder text like 'Lorem ipsum' or 'TODO' exists without bracketed clinician flags, (3) clinical terminology follows DSM-5-TR conventions, (4) source attributions are present for clinical facts. If issues found, describe them concisely. If the file is not a report draft, respond with 'Not a report draft — no validation needed.'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Before stopping, verify: (1) Were any IME report sections requested in this session? If yes, have ALL requested sections been generated? (2) Have all generated sections been validated by the section-validator agent? If any sections are missing or unvalidated, list them and recommend the user run validation. If no report sections were involved in this session, allow stop."
+          }
+        ]
+      }
+    ]
+  }
+}
